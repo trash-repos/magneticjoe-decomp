@@ -35,7 +35,6 @@ public abstract class resourcesAndControls
   public String e;
   public String f;
   public String[] a;
-  public int ar;
   public int as;
   public byte[] e;
   public byte e;
@@ -48,6 +47,25 @@ public abstract class resourcesAndControls
   public int[] j;
   public int[] k;
   public RecordStore a;
+
+
+
+
+  public enum State
+  {
+    SomeState1 (-3),
+    Paused (-2),
+    Running (-1)
+  }
+
+  /**
+   * <ul>
+   * <li>-3 –
+   * <li>-2 – paused
+   * <li>-1 – ingame
+   * </ul>
+   */
+  public State gameState;
   
   public resourcesAndControls()
   {
@@ -62,7 +80,7 @@ public abstract class resourcesAndControls
     this.d = "/snd_2_full";
     this.jdField_e_of_type_JavaLangString = "/data";
     this.jdField_f_of_type_JavaLangString = "/lang_en";
-    this.ar = -3;
+    this.gameState = -3;
     this.as = 0;
     this.jdField_e_of_type_Byte = 3;
     this.jdField_f_of_type_Byte = 1;
@@ -327,6 +345,19 @@ public abstract class resourcesAndControls
 
 
 
+  public static final enum Key
+  {
+    Up (0),
+    Down (1), 
+    Left (2),
+    Right (3),
+    Fire (4),
+    LeftSoft(5),
+    RightSoft(6),
+    Zero(9),
+    Any(10)
+  }
+
   /**
    * <ul>
    * <li>0 – up
@@ -345,61 +376,61 @@ public abstract class resourcesAndControls
   
   public final void keyPressed(int paramInt)
   {
-    this.controls[10] = 3;
+    this.controls[Key.Any] = 3;
     switch (paramInt)
     {
 
     case 51: // 3
-      this.controls[3] = 3;
-      this.controls[0] = 3;
+      this.controls[Key.Right] = 3;
+      this.controls[Key.Up] = 3;
       return;
 
     case 49: // 1
-      this.controls[2] = 3;
+      this.controls[Key.Left] = 3;
 
     case -1: // Up
     case 50: // 2
-      this.controls[0] = 3;
+      this.controls[Key.Up] = 3;
       return;
 
     case 57: // 9
-      this.controls[3] = 3;
-      this.controls[1] = 3;
+      this.controls[Key.Right] = 3;
+      this.controls[Key.Down] = 3;
       return;
 
     case 55: // 7
-      this.controls[2] = 3;
+      this.controls[Key.Left] = 3;
 
     case -2: // Down
     case 56: // 8
-      this.controls[1] = 3;
+      this.controls[Key.Down] = 3;
       return;
     
     case -3: // Left
     case 52: // 4
-      this.controls[2] = 3;
+      this.controls[Key.Left] = 3;
       return;
 
     case -4: // Right
     case 54: // 6
-      this.controls[3] = 3;
+      this.controls[Key.Right] = 3;
       return;
 
     case -5: // Select/middle softkey
     case 53: // 5
-      this.controls[4] = 3;
+      this.controls[Key.Fire] = 3;
       return;
 
     case 48: // 0
-      this.controls[9] = 3;
+      this.controls[Key.Zero] = 3;
       return;
 
     case -7: // Right softkey
-      this.controls[6] = 3;
+      this.controls[Key.RightSoft] = 3;
       return;
 
     case -6: // Left softkey
-      this.controls[5] = 3;
+      this.controls[Key.LeftSoft] = 3;
     }
   }
   

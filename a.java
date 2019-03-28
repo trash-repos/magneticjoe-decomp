@@ -26,7 +26,7 @@ public final class Game
   public int c;
   public int d;
   public int e;
-  public int f;
+  public int controlsThreshold;
   public int g;
   public byte[] a;
   public int h;
@@ -53,9 +53,9 @@ public final class Game
   public int u = this.m / this.s;
   public int v = 20;
   public int w = 5;
-  public int x = 0;
+  public int fireActive = 0;
   public int[] b;
-  public int y;
+  public int somePhysicsIndex;
   public int z;
   public byte b;
   public int[] c;
@@ -257,7 +257,7 @@ public final class Game
     }
   }
   
-  private void c()
+  private void pauseMusic()
   {
     if (this.jdField_b_of_type_Int >= this.jdField_a_of_type_ArrayOfJavaxMicroeditionMediaPlayer.length) {
       return;
@@ -290,16 +290,16 @@ public final class Game
       byte[] tmp13_9 = this.controls;
       tmp13_9[tmp13_12] = ((byte)(tmp13_9[tmp13_12] + ((this.controls[i1] & 0x1) << 2)));
     }
-    switch (this.ar)
+    switch (this.gameState)
     {
     case -3: 
-      j();
+      maybeDoExitOrLoad();
       break;
-    case -1: 
-      physics();
+    case Running: 
+      doPhysics();
       break;
-    case -2: 
-      k();
+    case Paused:
+      doMenu();
     }
     for (i1 = 0; i1 < 11; i1++) {
       if (this.controls[i1] > 3)
@@ -319,7 +319,7 @@ public final class Game
   
   private void a(Graphics paramGraphics)
   {
-    switch (this.ar)
+    switch (this.gameState)
     {
     case -3: 
       randSigned(paramGraphics);
@@ -339,10 +339,10 @@ public final class Game
   
   public final void hideNotify()
   {
-    c();
-    if ((this.ar != -3) && (this.ar != -2) && (this.H == 0))
+    pauseMusic();
+    if ((this.gameState != -3) && (this.gameState != -2) && (this.H == 0))
     {
-      this.ar = -2;
+      this.gameState = -2;
       this.as = 10;
     }
     for (int i1 = 0; i1 < 11; i1++) {
@@ -617,7 +617,7 @@ public final class Game
     this.r = 1;
     this.t = (this.l / this.s);
     this.u = (this.m / this.s);
-    this.x = 0;
+    this.fireActive = 0;
   }
   
   private void i()
@@ -665,8 +665,9 @@ public final class Game
     aaa(0);
   }
   
-  private void j()
+  private void maybeDoExitOrLoad()
   {
+    // Check if 46th string contains on position 36 characters "Thi" for "Thicc"
     if ((this.jdField_a_of_type_ArrayOfJavaLangString[46].charAt(36) != 'T') || (this.jdField_a_of_type_ArrayOfJavaLangString[46].charAt(37) != 'h') || (this.jdField_a_of_type_ArrayOfJavaLangString[46].charAt(38) != 'i'))
     {
       magneticjoe.display.destroyApp(false);
@@ -690,11 +691,11 @@ public final class Game
       }
       catch (Exception localException) {}
       this.as = 0;
-      this.ar = -2;
+      this.gameState = State.Paused;
     }
   }
   
-  private void k()
+  private void doMenu()
   {
     this.P += this.Q;
     if ((this.P >= 255) || (this.P <= 120)) {
@@ -707,13 +708,13 @@ public final class Game
       {
         this.H = 0;
         this.I = this.j;
-        this.ar = -1;
+        this.gameState = State.Running;
       }
       return;
     }
     if (this.I > 0)
     {
-      this.I -= 1;
+      this.I--;
       return;
     }
     if ((this.as != 10) && (this.as != 5) && (this.as != 6) && ((this.controls[5] > this.jdField_e_of_type_Byte) || (this.controls[4] > this.jdField_e_of_type_Byte))) {
@@ -756,10 +757,10 @@ public final class Game
       }
       break;
     case 1: 
-      if ((this.controls[0] > this.f) && (this.jdField_c_of_type_Int > 0)) {
+      if ((this.controls[0] > this.controlsThreshold) && (this.jdField_c_of_type_Int > 0)) {
         this.jdField_c_of_type_Int -= 1;
       }
-      if ((this.controls[1] > this.f) && (this.jdField_c_of_type_Int < this.jdField_d_of_type_Int)) {
+      if ((this.controls[1] > this.controlsThreshold) && (this.jdField_c_of_type_Int < this.jdField_d_of_type_Int)) {
         this.jdField_c_of_type_Int += 1;
       }
       if ((this.controls[5] > this.jdField_e_of_type_Byte) || (this.controls[4] > this.jdField_e_of_type_Byte))
@@ -790,10 +791,10 @@ public final class Game
       if (this.controls[3] > this.jdField_e_of_type_Byte) {
         this.Y = ((this.Y + 1) % 16);
       }
-      if (this.controls[0] > this.f) {
+      if (this.controls[0] > this.controlsThreshold) {
         this.jdField_a_of_type_ArrayOfByte[this.Y] = ((byte)((this.jdField_a_of_type_ArrayOfByte[this.Y] + 1) % this.alphabet.length()));
       }
-      if (this.controls[1] > this.f)
+      if (this.controls[1] > this.controlsThreshold)
       {
         this.jdField_a_of_type_ArrayOfByte[this.Y] = ((byte)(this.jdField_a_of_type_ArrayOfByte[this.Y] - 1));
         if (this.jdField_a_of_type_ArrayOfByte[this.Y] < 0)
@@ -907,7 +908,7 @@ public final class Game
         case 0: 
           this.N = (1 - this.N);
           if (this.N == 0) {
-            c();
+            pauseMusic();
           }
           break;
         case 1: 
@@ -1004,12 +1005,12 @@ public final class Game
         {
         case 0: 
           aaa(0);
-          this.ar = -1;
+          this.gameState = -1;
           break;
         case 1: 
           this.N = (1 - this.N);
           if (this.N == 0) {
-            c();
+            pauseMusic();
           }
           break;
         case 2: 
@@ -1019,7 +1020,7 @@ public final class Game
       }
       if (this.controls[6] > this.jdField_e_of_type_Byte)
       {
-        c();
+        pauseMusic();
         this.as = 0;
         return;
       }
@@ -1565,12 +1566,12 @@ public final class Game
 
   // ! This is important
   // TODO translate the rest
-  
-  private void physics()
+
+  private void doPhysics()
   {
     if ((this.J > 0) && (this.J < 100))
     {
-      this.J -= 1;
+      this.J--;
       if ((this.J == 0) && (this.O == 1) && (this.jdField_c_of_type_Int < 5) && (this.jdField_g_of_type_Int == 0)) {
         this.J = 160;
       }
@@ -1578,7 +1579,7 @@ public final class Game
     }
     if (this.J > 100)
     {
-      this.J -= 1;
+      this.J--;
       if (this.J == 101) {
         this.J = 0;
       }
@@ -1595,25 +1596,34 @@ public final class Game
     }
     if (this.I > 0)
     {
-      this.I -= 1;
+      this.I--;
       if (this.I == 0) {
         this.J = 10;
       }
-      q();
+      somethingToDoAfterPhysics();
       return;
     }
-    if (this.controls[4] > this.f) {
-      this.x = 1;
-    } else {
-      this.x = 0;
-    }
-    if (this.controls[6] > this.jdField_e_of_type_Byte)
+
+
+    if (this.controls[Key.Fire] > this.controlsThreshold)
     {
-      c();
-      this.ar = -2;
+      this.fireActive = 1;
+    }
+    else
+    {
+      this.fireActive = 0;
+    }
+
+
+    if (this.controls[Key.RightSoft] > this.jdField_e_of_type_Byte)
+    {
+      pauseMusic();
+      this.gameState = State.Paused;
       this.as = 10;
       return;
     }
+
+
     for (int i1 = -1 - this.w; i1 < 2 + this.w; i1++) {
       for (int i2 = -2 - this.w; i2 < 2 + this.w; i2++)
       {
@@ -1628,11 +1638,13 @@ public final class Game
         } else {
           i4 = 64;
         }
-        if ((this.x == 1) && (i4 > 23) && (i4 < 36) && (Math.abs(i1) + Math.abs(i2) < this.w)) {
+        if ((this.fireActive == 1) && (i4 > 23) && (i4 < 36) && (Math.abs(i1) + Math.abs(i2) < this.w)) {
           a(i4, i1, i2);
         }
       }
     }
+
+
     for (i1 = 1; i1 <= this.maybePositionAndVelocity1.length; i1++)
     {
       this.maybePositionAndVelocity1[(i1 - 1)] = (this.n * i1 / 256);
@@ -1640,15 +1652,16 @@ public final class Game
       this.maybePositionAndVelocity2[(i1 - 1)] = (this.o * i1 / 256);
       this.maybePositionAndVelocity2[(i1 - 1)] /= this.maybePositionAndVelocity1.length;
     }
-    this.y = 0;
+
+    this.somePhysicsIndex = 0;
     int i3 = 0;
-    while ((this.y < this.maybePositionAndVelocity1.length) && (i3 == 0))
+    while ((this.somePhysicsIndex < this.maybePositionAndVelocity1.length) && (i3 == 0))
     {
       i3 = 0;
       for (i1 = 0; i1 < 16; i1++)
       {
         this.jdField_b_of_type_ArrayOfInt[i1] = 16;
-        this.jdField_g_of_type_ArrayOfInt[i1] = a(this.maybePositionAndVelocity1[this.y] + this.jdField_c_of_type_ArrayOfInt[i1], -this.maybePositionAndVelocity2[this.y] + this.jdField_d_of_type_ArrayOfInt[i1]);
+        this.jdField_g_of_type_ArrayOfInt[i1] = a(this.maybePositionAndVelocity1[this.somePhysicsIndex] + this.jdField_c_of_type_ArrayOfInt[i1], -this.maybePositionAndVelocity2[this.somePhysicsIndex] + this.jdField_d_of_type_ArrayOfInt[i1]);
         if (this.jdField_g_of_type_ArrayOfInt[i1] != 16)
         {
           this.jdField_b_of_type_ArrayOfInt[i1] = this.jdField_g_of_type_ArrayOfInt[i1];
@@ -1659,9 +1672,10 @@ public final class Game
         }
       }
       if (i3 == 0) {
-        this.y += 1;
+        this.somePhysicsIndex += 1;
       }
     }
+    
     this.p += this.q;
     if (this.p < 0) {
       this.p += 64;
@@ -1670,36 +1684,47 @@ public final class Game
     if (i3 == 1) {
       o();
     }
+
     this.o += 96;
+
     if (this.n > this.v * 128) {
       this.n = (this.v * 128);
     }
+
     if (this.n < -this.v * 128) {
       this.n = (-this.v * 128);
     }
+
     if (this.o > this.v * 128) {
       this.o = (this.v * 128);
     }
+
     if (this.o < -this.v * 128) {
       this.o = (-this.v * 128);
     }
-    if (this.y > 0)
+
+    if (this.somePhysicsIndex > 0)
     {
-      this.l += this.maybePositionAndVelocity1[(this.y - 1)];
-      this.m += this.maybePositionAndVelocity2[(this.y - 1)];
+      this.l += this.maybePositionAndVelocity1[(this.somePhysicsIndex - 1)];
+      this.m += this.maybePositionAndVelocity2[(this.somePhysicsIndex - 1)];
     }
+
     if (this.m > 5000) {
       this.z = -1;
     }
+
     this.t = (this.l / this.s);
     this.u = (this.m / this.s);
-    q();
+
+    somethingToDoAfterPhysics();
+
     if (this.z != 0) {
       this.H = 1;
     }
+
   }
   
-  private void q()
+  private void somethingToDoAfterPhysics()
   {
     this.A = (this.l * this.af / this.s);
     this.B = (this.m * this.af / this.s);
@@ -1759,7 +1784,7 @@ public final class Game
     catch (Exception localException) {}
     this.H = 0;
     this.I = this.j;
-    this.ar = -2;
+    this.gameState = State.Paused;
   }
   
   private void b(Graphics paramGraphics)
@@ -2335,7 +2360,7 @@ public final class Game
         } else {
           i6 = 64;
         }
-        if ((this.x == 1) && (i6 > 23) && (i6 < 36) && (Math.abs(i1) + Math.abs(i2) < this.w))
+        if ((this.fireActive == 1) && (i6 > 23) && (i6 < 36) && (Math.abs(i1) + Math.abs(i2) < this.w))
         {
           a(imageB.am, imageB.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 1);
           a(imageB.am, imageB.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 1);
@@ -2343,7 +2368,7 @@ public final class Game
         }
       }
     }
-    if (this.x == 1)
+    if (this.fireActive == 1)
     {
       paramGraphics.setColor(128, 128, 255);
       paramGraphics.drawArc(-1 + imageB.am - this.ae / 2, -1 + imageB.an - this.ae / 2, 1 + this.ae, 1 + this.ae, 0, 360);
