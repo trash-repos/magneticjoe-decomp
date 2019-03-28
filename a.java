@@ -9,19 +9,19 @@ import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.midlet.MIDlet;
 
-public final class a
-  extends loadGameResources
+public final class Game
+  extends resourcesAndControls
   implements Runnable
 {
-  public Image[] a;
-  public Image a;
-  public Image b;
-  public Image c;
-  public Image d;
-  public Image[] b;
-  public int a;
-  public String a;
-  public Player[] a;
+  public Image[] imageArrayA;
+  public Image imageA;
+  public Image imageB;
+  public Image imageC;
+  public Image imageD;
+  public Image[] imageArrayB;
+  public int intA;
+  public String stringA;
+  public Player[] playerArrayA;
   public int b;
   public int c;
   public int d;
@@ -104,8 +104,19 @@ public final class a
   public int ai = 4;
   public int aj = 6;
   public byte d;
+
+  private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  private int[] jdField_c_of_type_ArrayOfInt = new int[16];
+  private int[] jdField_d_of_type_ArrayOfInt = new int[16];
+  private int[] jdField_e_of_type_ArrayOfInt = new int[16];
+  private int[] jdField_f_of_type_ArrayOfInt = new int[16];
+  private int[] jdField_g_of_type_ArrayOfInt = new int[16];
+
+  private int[] maybePositionAndVelocity1 = new int[4];
+  private int[] maybePositionAndVelocity2 = new int[4];
   
-  public somethingWithLocale()
+  public Game()
   {
     this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage = new Image[5];
     this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage = new Image[10];
@@ -124,49 +135,41 @@ public final class a
     this.jdField_b_of_type_ArrayOfByte = new byte[] { 0, 0, 0 };
     this.jdField_a_of_type_ArrayOfInt = new int[] { 4, 1, 1, 0 };
     this.jdField_a_of_type_Byte = 0;
-    this.jdField_b_of_type_JavaLangString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     this.jdField_b_of_type_Array2dOfByte = new byte[][] { { 64, 64, 64, 64, 64, 64, 64, 64, 64 }, { 64, 64, 64, 64, 62, 64, 64, 64, 64 }, { 63, 63, 63, 63, 63, 63, 63, 63, 63 }, { 14, 14, 15, 15, 14, 15, 14, 14, 14 }, { 43, 14, 42, 43, 14, 42, 43, 15, 42 }, { 40, 40, 40, 15, 14, 42, 41, 41, 41 }, { 64, 47, 14, 47, 14, 44, 14, 44, 64 }, { 14, 46, 64, 45, 14, 46, 64, 45, 14 }, { 24, 15, 14, 14, 24, 14, 15, 14, 24 }, { 14, 14, 26, 14, 26, 15, 26, 15, 14 }, { 14, 15, 25, 14, 25, 15, 25, 14, 14 }, { 27, 14, 15, 15, 27, 15, 14, 15, 27 }, { 45, 44, 64, 64, 64, 64, 64, 47, 46 }, { 47, 46, 64, 45, 44, 64, 64, 64, 64 }, { 35, 32, 64, 31, 28, 64, 64, 64, 64 }, { 43, 15, 42, 31, 24, 28, 64, 64, 64 } };
     this.jdField_b_of_type_ArrayOfInt = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
     this.jdField_b_of_type_Byte = 0;
-    this.jdField_c_of_type_ArrayOfInt = new int[16];
-    this.jdField_d_of_type_ArrayOfInt = new int[16];
-    this.jdField_e_of_type_ArrayOfInt = new int[16];
-    this.jdField_f_of_type_ArrayOfInt = new int[16];
-    this.jdField_g_of_type_ArrayOfInt = new int[16];
-    this.jdField_h_of_type_ArrayOfInt = new int[4];
-    this.jdField_i_of_type_ArrayOfInt = new int[4];
     this.jdField_a_of_type_Array2dOfInt = new int[][] { { 23, 79, 176 }, { 171, 132, 114 }, { 55, 46, 131 }, { 31, 4, 16 }, { 195, 214, 255 }, { 100, 123, 234 } };
     this.jdField_c_of_type_Byte = 110;
     this.jdField_d_of_type_Byte = 8;
     System.out.println("Game started.");
     setFullScreenMode(true);
-    b.ak = getWidth();
-    b.al = getHeight();
-    b.am = b.ak / 2;
-    b.an = b.al / 2;
-    this.j = (Math.max(b.al, b.ak) * 3 / 4 / 16);
+    imageB.ak = getWidth();
+    imageB.al = getHeight();
+    imageB.am = imageB.ak / 2;
+    imageB.an = imageB.al / 2;
+    this.j = (Math.max(imageB.al, imageB.ak) * 3 / 4 / 16);
     this.controls = new byte[11];
     for (int i1 = 0; i1 < 11; i1++) {
       this.controls[i1] = 0;
     }
-    this.jdField_a_of_type_JavaUtilRandom = new Random(476543L);
-    this.jdField_e_of_type_JavaxMicroeditionLcduiImage = Image.createImage(b.ak, b.al);
+    this.randomGen = new Random(476543L);
+    this.jdField_e_of_type_JavaxMicroeditionLcduiImage = Image.createImage(imageB.ak, imageB.al);
     this.jdField_a_of_type_JavaxMicroeditionLcduiGraphics = this.jdField_e_of_type_JavaxMicroeditionLcduiImage.getGraphics();
     try
     {
-      this.jdField_a_of_type_JavaLangString = magneticjoe.a.getAppProperty("MIDlet-Version");
+      this.version = magneticjoe.display.getAppProperty("MIDlet-Version");
     }
     catch (Exception localException2)
     {
-      this.jdField_a_of_type_JavaLangString = "1.0";
+      this.version = "1.0";
     }
-    b();
+    somethingWithAudio();
     i1 = 0;
     try
     {
       for (;;)
       {
-        this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[i1] = Image.createImage(this.c + "/splash" + i1 + ".png");
+        this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[i1] = Image.createImage(this.imageC + "/splash" + i1 + ".png");
         i1++;
       }
     }
@@ -176,14 +179,14 @@ public final class a
       this.jdField_a_of_type_Int = i1;
       try
       {
-        this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[i1] = Image.createImage(this.c + "/title.png");
+        this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[i1] = Image.createImage(this.imageC + "/title.png");
       }
       catch (Exception localException1)
       {
         System.out.println("Error: cannot load image!" + localException1);
       }
       Image.createImage(1, 1);
-      somethingWithLocale();
+      a();
       loadRecords(this.jdField_a_of_type_ArrayOfInt, this.jdField_a_of_type_Array2dOfByte[0], this.jdField_a_of_type_Array2dOfByte[1], this.jdField_a_of_type_Array2dOfByte[2]);
       System.out.println("Started data: " + this.jdField_a_of_type_ArrayOfInt[0] + ", " + this.jdField_a_of_type_ArrayOfInt[1] + ", " + this.jdField_a_of_type_ArrayOfInt[2] + ", " + this.jdField_a_of_type_ArrayOfInt[3]);
       this.jdField_d_of_type_Int = this.jdField_a_of_type_ArrayOfInt[0];
@@ -193,7 +196,7 @@ public final class a
     }
   }
   
-  private void b()
+  private void somethingWithAudio()
   {
     String[] arrayOfString1 = { "/mj.mid", "/mj_win.mid", "/mj_lose.mid", "/mj_button1.wav", "/mj_button2.wav", "/mj_button3.wav" };
     String[] arrayOfString2 = { "audio/midi", "audio/midi", "audio/midi", "audio/x-wav", "audio/x-wav", "audio/x-wav" };
@@ -206,7 +209,7 @@ public final class a
           this.jdField_a_of_type_ArrayOfJavaxMicroeditionMediaPlayer[i1].close();
           this.jdField_a_of_type_ArrayOfJavaxMicroeditionMediaPlayer[i1] = null;
         }
-        byte[] arrayOfByte = b.getSomeResource(this.d + arrayOfString1[i1]);
+        byte[] arrayOfByte = imageB.getSomeResource(this.imageD + arrayOfString1[i1]);
         this.jdField_a_of_type_ArrayOfJavaxMicroeditionMediaPlayer[i1] = Manager.createPlayer(new ByteArrayInputStream(arrayOfByte), arrayOfString2[i1]);
         this.jdField_a_of_type_ArrayOfJavaxMicroeditionMediaPlayer[i1].realize();
       }
@@ -293,7 +296,7 @@ public final class a
       j();
       break;
     case -1: 
-      p();
+      physics();
       break;
     case -2: 
       k();
@@ -349,7 +352,7 @@ public final class a
   
   public final void run()
   {
-    System.out.println("haho SW:" + b.ak + " SH:" + b.al);
+    System.out.println("haho SW:" + imageB.ak + " SH:" + imageB.al);
     System.gc();
     System.out.println("gamestart:" + Runtime.getRuntime().freeMemory());
     for (;;)
@@ -364,16 +367,16 @@ public final class a
         }
         repaint();
         serviceRepaints();
-        this.b = (System.currentTimeMillis() - this.jdField_a_of_type_Long);
-        if (this.b < this.ap) {
-          Thread.sleep(this.ap - this.b);
+        this.imageB = (System.currentTimeMillis() - this.jdField_a_of_type_Long);
+        if (this.imageB < this.ap) {
+          Thread.sleep(this.ap - this.imageB);
         }
       }
       catch (Exception localException) {}
     }
   }
   
-  private int somethingWithLocale()
+  private int weirdMethodReturningInt()
   {
     int i2 = 0;
     byte[] arrayOfByte = new byte[16];
@@ -577,7 +580,7 @@ public final class a
   {
     int[] arrayOfInt = { 3, 4, 35, 6, 2, 8, 9, 20, 36, 11, 12, 19, 14, 31, 34, 21, 33, 7, 37, 15, 1, 29, 13, 18, 16, 10, 25, 22, 24, 17, 0, 26, 23, 27, 5, 28, 30, 32, 40, 43, 41, 39, 38, 44, 45, 46, 42, 49, 48, 47, 0, 0 };
     byte[] arrayOfByte;
-    int i2 = (arrayOfByte = b.getSomeResource(this.jdField_e_of_type_JavaLangString + "/level.dat"))[(arrayOfInt[this.jdField_c_of_type_Int] * 4 + 2)];
+    int i2 = (arrayOfByte = imageB.getSomeResource(this.jdField_e_of_type_JavaLangString + "/level.dat"))[(arrayOfInt[this.jdField_c_of_type_Int] * 4 + 2)];
     int i3 = arrayOfByte[(arrayOfInt[this.jdField_c_of_type_Int] * 4 + 3)];
     int i4 = (i4 = 128 * (arrayOfByte[(arrayOfInt[this.jdField_c_of_type_Int] * 4)] + 100)) + arrayOfByte[(arrayOfInt[this.jdField_c_of_type_Int] * 4 + 1)];
     this.jdField_c_of_type_ArrayOfByte = new byte[i2 * i3];
@@ -635,21 +638,21 @@ public final class a
       switch (this.G)
       {
       case 4: 
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2] = Image.createImage(this.c + "/set3.png");
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3] = Image.createImage(this.c + "/back_3.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2] = Image.createImage(this.imageC + "/set3.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3] = Image.createImage(this.imageC + "/back_3.png");
         break;
       case 2: 
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2] = Image.createImage(this.c + "/set2.png");
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3] = Image.createImage(this.c + "/back_2.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2] = Image.createImage(this.imageC + "/set2.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3] = Image.createImage(this.imageC + "/back_2.png");
         break;
       case 0: 
       case 1: 
       case 3: 
       default: 
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2] = Image.createImage(this.c + "/set1.png");
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3] = Image.createImage(this.c + "/back_1.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2] = Image.createImage(this.imageC + "/set1.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3] = Image.createImage(this.imageC + "/back_1.png");
       }
-      this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[4] = Image.createImage(this.c + "/pause.png");
+      this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[4] = Image.createImage(this.imageC + "/pause.png");
     }
     catch (Exception localException)
     {
@@ -657,7 +660,7 @@ public final class a
     }
     this.Z = this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3].getWidth();
     this.aa = this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3].getHeight();
-    this.ad = (b.an - this.Z / 2 - 20);
+    this.ad = (imageB.an - this.Z / 2 - 20);
     this.ac = this.ad;
     aaa(0);
   }
@@ -666,8 +669,8 @@ public final class a
   {
     if ((this.jdField_a_of_type_ArrayOfJavaLangString[46].charAt(36) != 'T') || (this.jdField_a_of_type_ArrayOfJavaLangString[46].charAt(37) != 'h') || (this.jdField_a_of_type_ArrayOfJavaLangString[46].charAt(38) != 'i'))
     {
-      magneticjoe.a.destroyApp(false);
-      magneticjoe.a.notifyDestroyed();
+      magneticjoe.display.destroyApp(false);
+      magneticjoe.display.notifyDestroyed();
     }
     if ((this.at > (this.as + 1) * 20) && (this.as < this.jdField_a_of_type_Int)) {
       this.as += 1;
@@ -679,11 +682,11 @@ public final class a
       }
       try
       {
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1] = Image.createImage(this.c + "/fig_s60.png");
-        this.jdField_a_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/arrows.png");
-        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[5] = Image.createImage(this.c + "/fig2_s60.png");
-        this.jdField_b_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/title_mini.png");
-        this.jdField_c_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/options.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1] = Image.createImage(this.imageC + "/fig_s60.png");
+        this.jdField_a_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/arrows.png");
+        this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[5] = Image.createImage(this.imageC + "/fig2_s60.png");
+        this.jdField_b_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/title_mini.png");
+        this.jdField_c_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/options.png");
       }
       catch (Exception localException) {}
       this.as = 0;
@@ -747,8 +750,8 @@ public final class a
       if (this.controls[6] > this.jdField_e_of_type_Byte)
       {
         d();
-        magneticjoe.a.destroyApp(false);
-        magneticjoe.a.notifyDestroyed();
+        magneticjoe.display.destroyApp(false);
+        magneticjoe.display.notifyDestroyed();
         return;
       }
       break;
@@ -788,7 +791,7 @@ public final class a
         this.Y = ((this.Y + 1) % 16);
       }
       if (this.controls[0] > this.f) {
-        this.jdField_a_of_type_ArrayOfByte[this.Y] = ((byte)((this.jdField_a_of_type_ArrayOfByte[this.Y] + 1) % this.jdField_b_of_type_JavaLangString.length()));
+        this.jdField_a_of_type_ArrayOfByte[this.Y] = ((byte)((this.jdField_a_of_type_ArrayOfByte[this.Y] + 1) % this.alphabet.length()));
       }
       if (this.controls[1] > this.f)
       {
@@ -797,7 +800,7 @@ public final class a
         {
           int tmp804_801 = this.Y;
           byte[] tmp804_797 = this.jdField_a_of_type_ArrayOfByte;
-          tmp804_797[tmp804_801] = ((byte)(tmp804_797[tmp804_801] + this.jdField_b_of_type_JavaLangString.length()));
+          tmp804_797[tmp804_801] = ((byte)(tmp804_797[tmp804_801] + this.alphabet.length()));
         }
       }
       if (this.controls[6] > this.jdField_e_of_type_Byte) {
@@ -842,7 +845,7 @@ public final class a
       if (this.jdField_h_of_type_Int < 0) {
         this.jdField_h_of_type_Int += 3;
       }
-      this.jdField_i_of_type_Int = somethingWithLocale();
+      this.jdField_i_of_type_Int = weirdMethodReturningInt();
       if (this.jdField_i_of_type_Int > 0)
       {
         while (this.jdField_b_of_type_ArrayOfByte[this.jdField_h_of_type_Int] == 0)
@@ -1559,7 +1562,11 @@ public final class a
     }
   }
   
-  private void p()
+
+  // ! This is important
+  // TODO translate the rest
+  
+  private void physics()
   {
     if ((this.J > 0) && (this.J < 100))
     {
@@ -1626,22 +1633,22 @@ public final class a
         }
       }
     }
-    for (i1 = 1; i1 <= this.jdField_h_of_type_ArrayOfInt.length; i1++)
+    for (i1 = 1; i1 <= this.maybePositionAndVelocity1.length; i1++)
     {
-      this.jdField_h_of_type_ArrayOfInt[(i1 - 1)] = (this.n * i1 / 256);
-      this.jdField_h_of_type_ArrayOfInt[(i1 - 1)] /= this.jdField_h_of_type_ArrayOfInt.length;
-      this.jdField_i_of_type_ArrayOfInt[(i1 - 1)] = (this.o * i1 / 256);
-      this.jdField_i_of_type_ArrayOfInt[(i1 - 1)] /= this.jdField_h_of_type_ArrayOfInt.length;
+      this.maybePositionAndVelocity1[(i1 - 1)] = (this.n * i1 / 256);
+      this.maybePositionAndVelocity1[(i1 - 1)] /= this.maybePositionAndVelocity1.length;
+      this.maybePositionAndVelocity2[(i1 - 1)] = (this.o * i1 / 256);
+      this.maybePositionAndVelocity2[(i1 - 1)] /= this.maybePositionAndVelocity1.length;
     }
     this.y = 0;
     int i3 = 0;
-    while ((this.y < this.jdField_h_of_type_ArrayOfInt.length) && (i3 == 0))
+    while ((this.y < this.maybePositionAndVelocity1.length) && (i3 == 0))
     {
       i3 = 0;
       for (i1 = 0; i1 < 16; i1++)
       {
         this.jdField_b_of_type_ArrayOfInt[i1] = 16;
-        this.jdField_g_of_type_ArrayOfInt[i1] = a(this.jdField_h_of_type_ArrayOfInt[this.y] + this.jdField_c_of_type_ArrayOfInt[i1], -this.jdField_i_of_type_ArrayOfInt[this.y] + this.jdField_d_of_type_ArrayOfInt[i1]);
+        this.jdField_g_of_type_ArrayOfInt[i1] = a(this.maybePositionAndVelocity1[this.y] + this.jdField_c_of_type_ArrayOfInt[i1], -this.maybePositionAndVelocity2[this.y] + this.jdField_d_of_type_ArrayOfInt[i1]);
         if (this.jdField_g_of_type_ArrayOfInt[i1] != 16)
         {
           this.jdField_b_of_type_ArrayOfInt[i1] = this.jdField_g_of_type_ArrayOfInt[i1];
@@ -1678,8 +1685,8 @@ public final class a
     }
     if (this.y > 0)
     {
-      this.l += this.jdField_h_of_type_ArrayOfInt[(this.y - 1)];
-      this.m += this.jdField_i_of_type_ArrayOfInt[(this.y - 1)];
+      this.l += this.maybePositionAndVelocity1[(this.y - 1)];
+      this.m += this.maybePositionAndVelocity2[(this.y - 1)];
     }
     if (this.m > 5000) {
       this.z = -1;
@@ -1721,13 +1728,13 @@ public final class a
         switch (this.jdField_b_of_type_Byte)
         {
         case 0: 
-          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/fig_dis.png");
+          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/fig_dis.png");
           break;
         case 1: 
-          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/fig_over.png");
+          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/fig_over.png");
           break;
         case 2: 
-          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/fig_cry.png");
+          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/fig_cry.png");
         }
         aaa(2);
         this.as = 6;
@@ -1737,13 +1744,13 @@ public final class a
         switch (this.jdField_b_of_type_Byte)
         {
         case 0: 
-          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/fig_ok.png");
+          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/fig_ok.png");
           break;
         case 1: 
-          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/fig_king.png");
+          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/fig_king.png");
           break;
         case 2: 
-          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.c + "/fig_flag.png");
+          this.jdField_d_of_type_JavaxMicroeditionLcduiImage = Image.createImage(this.imageC + "/fig_flag.png");
         }
         aaa(1);
         this.as = 5;
@@ -1760,30 +1767,30 @@ public final class a
     if (this.at < 2)
     {
       a(paramGraphics, this.jdField_a_of_type_JavaxMicroeditionLcduiFont, true);
-      a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[34] + this.jdField_a_of_type_ArrayOfJavaLangString[46], b.am, this.ag, b.ak - 10, 0, -1, false, 17);
+      a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[34] + this.jdField_a_of_type_ArrayOfJavaLangString[46], imageB.am, this.ag, imageB.ak - 10, 0, -1, false, 17);
       this.S = (this.au + 1);
-      a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[35], b.am, this.ag, b.ak - 10, 0, -1, false, 17);
+      a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[35], imageB.am, this.ag, imageB.ak - 10, 0, -1, false, 17);
       this.T = this.au;
-      a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[41] + this.jdField_a_of_type_ArrayOfJavaLangString[42], b.am, this.ag, b.ak - 10, 0, -1, false, 17);
+      a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[41] + this.jdField_a_of_type_ArrayOfJavaLangString[42], imageB.am, this.ag, imageB.ak - 10, 0, -1, false, 17);
       this.U = this.au;
     }
     if (this.as == this.jdField_a_of_type_Int)
     {
       paramGraphics.setColor(255, 255, 255);
-      paramGraphics.fillRect(0, 0, b.ak, b.al);
+      paramGraphics.fillRect(0, 0, imageB.ak, imageB.al);
     }
     else
     {
-      for (int i1 = 0; i1 < b.ak; i1 += 15) {
-        for (int i2 = 0; i2 < b.al; i2 += 15)
+      for (int i1 = 0; i1 < imageB.ak; i1 += 15) {
+        for (int i2 = 0; i2 < imageB.al; i2 += 15)
         {
           paramGraphics.setClip(i1, i2, 15, 15);
           paramGraphics.drawImage(this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[this.as], i1, i2, 20);
         }
       }
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
-    paramGraphics.drawImage(this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[this.as], b.am, b.an, 3);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
+    paramGraphics.drawImage(this.jdField_a_of_type_ArrayOfJavaxMicroeditionLcduiImage[this.as], imageB.am, imageB.an, 3);
   }
   
   private void a(int paramInt1, int paramInt2, int paramInt3, int paramInt4, Graphics paramGraphics, int paramInt5)
@@ -1828,60 +1835,60 @@ public final class a
   
   private void a(int paramInt, Graphics paramGraphics)
   {
-    int i1 = b.ak / 10;
+    int i1 = imageB.ak / 10;
     paramGraphics.setColor(128, 128, 255);
     paramGraphics.drawArc(-1 + i1 - this.ae / 2, -1 - this.ae / 2 + 5 + paramInt, 1 + this.ae, 1 + this.ae, 0, 360);
-    paramGraphics.drawArc(-1 + b.ak - i1 - this.ae / 2, -1 - this.ae / 2 + 5 + paramInt, 1 + this.ae, 1 + this.ae, 0, 360);
+    paramGraphics.drawArc(-1 + imageB.ak - i1 - this.ae / 2, -1 - this.ae / 2 + 5 + paramInt, 1 + this.ae, 1 + this.ae, 0, 360);
     paramGraphics.setColor(64, 64, 255);
     paramGraphics.drawArc(-2 + i1 - this.ae / 2, -2 - this.ae / 2 + 5 + paramInt, 3 + this.ae, 3 + this.ae, 0, 360);
-    paramGraphics.drawArc(-2 + b.ak - i1 - this.ae / 2, -2 - this.ae / 2 + 5 + paramInt, 3 + this.ae, 3 + this.ae, 0, 360);
+    paramGraphics.drawArc(-2 + imageB.ak - i1 - this.ae / 2, -2 - this.ae / 2 + 5 + paramInt, 3 + this.ae, 3 + this.ae, 0, 360);
     paramGraphics.setColor(32, 32, 192);
     paramGraphics.drawArc(-3 + i1 - this.ae / 2, -3 - this.ae / 2 + 5 + paramInt, 5 + this.ae, 5 + this.ae, 0, 360);
-    paramGraphics.drawArc(-3 + b.ak - i1 - this.ae / 2, -3 - this.ae / 2 + 5 + paramInt, 5 + this.ae, 5 + this.ae, 0, 360);
-    a(i1, 5 + paramInt, b.ak - i1, 5 + paramInt, paramGraphics, 1);
-    a(i1, 5 + paramInt, b.ak - i1, 5 + paramInt, paramGraphics, 1);
-    a(i1, 5 + paramInt, b.ak - i1, 5 + paramInt, paramGraphics, 3);
+    paramGraphics.drawArc(-3 + imageB.ak - i1 - this.ae / 2, -3 - this.ae / 2 + 5 + paramInt, 5 + this.ae, 5 + this.ae, 0, 360);
+    a(i1, 5 + paramInt, imageB.ak - i1, 5 + paramInt, paramGraphics, 1);
+    a(i1, 5 + paramInt, imageB.ak - i1, 5 + paramInt, paramGraphics, 1);
+    a(i1, 5 + paramInt, imageB.ak - i1, 5 + paramInt, paramGraphics, 3);
     paramGraphics.setClip(i1 - this.ae / 2, -(this.ae / 2) + 5 + paramInt, this.ae, this.ae);
     paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1], i1 - this.ae / 2, -(this.ae / 2) + 5 + paramInt, 20);
-    paramGraphics.setClip(b.ak - i1 - this.ae / 2, -(this.ae / 2) + 5 + paramInt, this.ae, this.ae);
-    paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1], b.ak - i1 - this.ae / 2, -(this.ae / 2) + 5 + paramInt, 20);
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(imageB.ak - i1 - this.ae / 2, -(this.ae / 2) + 5 + paramInt, this.ae, this.ae);
+    paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1], imageB.ak - i1 - this.ae / 2, -(this.ae / 2) + 5 + paramInt, 20);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
   }
   
   private void c(Graphics paramGraphics)
   {
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[30], 1 + b.am, this.ag + this.ah * 0, 17);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[11], 1 + b.am, this.ag + this.ah * 1, 17);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], 1 + b.am, this.ag + this.ah * 2, 17);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], 1 + b.am, this.ag + this.ah * 3, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[30], 1 + imageB.am, this.ag + this.ah * 0, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[11], 1 + imageB.am, this.ag + this.ah * 1, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], 1 + imageB.am, this.ag + this.ah * 2, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], 1 + imageB.am, this.ag + this.ah * 3, 17);
     a(this.ag + this.ah * (this.R + 1), paramGraphics);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[30], b.am, this.ag + this.ah * 0, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[30], imageB.am, this.ag + this.ah * 0, 17);
     if (0 == this.R) {
       paramGraphics.setColor(255, 255, 255);
     } else {
       paramGraphics.setColor(128, 128, 128);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[11], b.am, this.ag + this.ah * 1, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[11], imageB.am, this.ag + this.ah * 1, 17);
     if (1 == this.R) {
       paramGraphics.setColor(255, 255, 255);
     } else {
       paramGraphics.setColor(128, 128, 128);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], b.am, this.ag + this.ah * 2, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], imageB.am, this.ag + this.ah * 2, 17);
     if (2 == this.R) {
       paramGraphics.setColor(255, 255, 255);
     } else {
       paramGraphics.setColor(128, 128, 128);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], b.am, this.ag + this.ah * 3, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], imageB.am, this.ag + this.ah * 3, 17);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void d(Graphics paramGraphics)
@@ -1889,8 +1896,8 @@ public final class a
     paramGraphics.setColor(0, 0, 0);
     for (int i1 = 0; i1 < 4; i1++)
     {
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 1 + b.am, this.ag + this.ah * i1, 17);
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 1 + b.am, this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 1 + imageB.am, this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 1 + imageB.am, this.ag + this.ah * i1, 17);
     }
     a(this.ag + this.ah * this.K, paramGraphics);
     for (i1 = 0; i1 < 4; i1++)
@@ -1900,14 +1907,14 @@ public final class a
       } else {
         paramGraphics.setColor(128, 128, 128);
       }
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], b.am, this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], imageB.am, this.ag + this.ah * i1, 17);
     }
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[5], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[5], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[5], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[5], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void e(Graphics paramGraphics)
@@ -1915,7 +1922,7 @@ public final class a
     for (int i1 = 0; i1 < 4; i1++)
     {
       paramGraphics.setColor(0, 0, 0);
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[22] + " " + (1 + i1 + this.jdField_e_of_type_Int), b.am + 1, 1 + this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[22] + " " + (1 + i1 + this.jdField_e_of_type_Int), imageB.am + 1, 1 + this.ag + this.ah * i1, 17);
       if (i1 + this.jdField_e_of_type_Int == this.jdField_c_of_type_Int)
       {
         a(this.ag + this.ah * i1, paramGraphics);
@@ -1925,34 +1932,34 @@ public final class a
       {
         paramGraphics.setColor(128, 128, 128);
       }
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[22] + " " + (1 + i1 + this.jdField_e_of_type_Int), b.am, this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[22] + " " + (1 + i1 + this.jdField_e_of_type_Int), imageB.am, this.ag + this.ah * i1, 17);
     }
     if (this.jdField_c_of_type_Int > 0)
     {
-      paramGraphics.setClip(0, 3 + this.ag - this.ah + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, 3 + this.ag - this.ah + 2 * (this.at % 2), 17);
+      paramGraphics.setClip(0, 3 + this.ag - this.ah + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, 3 + this.ag - this.ah + 2 * (this.at % 2), 17);
     }
     if (this.jdField_c_of_type_Int < this.jdField_d_of_type_Int)
     {
-      paramGraphics.setClip(0, 3 + this.ag + this.ah * 4 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, 3 + this.ag + this.ah * 4 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
+      paramGraphics.setClip(0, 3 + this.ag + this.ah * 4 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, 3 + this.ag + this.ah * 4 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void f(Graphics paramGraphics)
   {
     int i1 = 0;
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[16], b.ak * 2 / 3, this.ag, b.am + b.am / 4, b.al, 0, false, 17);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[17], b.ak * 2 / 3, this.ag + this.ah, b.am + b.am / 4, b.al, 0, false, 17);
-    paramGraphics.setClip(b.ak / 10, this.ag + this.ah / 2, this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight());
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[16], imageB.ak * 2 / 3, this.ag, imageB.am + imageB.am / 4, imageB.al, 0, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[17], imageB.ak * 2 / 3, this.ag + this.ah, imageB.am + imageB.am / 4, imageB.al, 0, false, 17);
+    paramGraphics.setClip(imageB.ak / 10, this.ag + this.ah / 2, this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight());
     if ((this.jdField_b_of_type_Byte == 0) && ((i1 = this.at % 22 / 2) > 5)) {
       i1 = 11 - i1;
     }
@@ -1962,7 +1969,7 @@ public final class a
     if (this.jdField_b_of_type_Byte == 2) {
       i1 = this.at % 12 / 2;
     }
-    paramGraphics.drawImage(this.jdField_d_of_type_JavaxMicroeditionLcduiImage, b.ak / 10 - i1 * this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.ag + this.ah / 2, 20);
+    paramGraphics.drawImage(this.jdField_d_of_type_JavaxMicroeditionLcduiImage, imageB.ak / 10 - i1 * this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.ag + this.ah / 2, 20);
     if ((this.jdField_c_of_type_Int == this.jdField_d_of_type_Int) && (this.jdField_d_of_type_Int == 49)) {
       i1 = 4;
     } else {
@@ -1971,21 +1978,21 @@ public final class a
     if (this.jdField_g_of_type_Int == 1) {
       i1 = 12;
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[i1], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void g(Graphics paramGraphics)
   {
     int i1 = 0;
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[31] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[32], b.ak * 2 / 3, this.ag, b.am + b.am / 4, b.al, 0, false, 17);
-    paramGraphics.setClip(b.ak / 10, this.ag + this.ah / 2, this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight());
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[31] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[32], imageB.ak * 2 / 3, this.ag, imageB.am + imageB.am / 4, imageB.al, 0, false, 17);
+    paramGraphics.setClip(imageB.ak / 10, this.ag + this.ah / 2, this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight());
     if (this.jdField_b_of_type_Byte == 0) {
       i1 = this.at % 12 / 2;
     }
@@ -1995,21 +2002,21 @@ public final class a
     if (this.jdField_b_of_type_Byte == 2) {
       i1 = this.at % 6;
     }
-    paramGraphics.drawImage(this.jdField_d_of_type_JavaxMicroeditionLcduiImage, b.ak / 10 - i1 * this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.ag + this.ah / 2, 20);
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.drawImage(this.jdField_d_of_type_JavaxMicroeditionLcduiImage, imageB.ak / 10 - i1 * this.jdField_d_of_type_JavaxMicroeditionLcduiImage.getHeight(), this.ag + this.ah / 2, 20);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[12], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void h(Graphics paramGraphics)
   {
     paramGraphics.setColor(0, 0, 0);
     for (int i1 = 0; i1 < 3; i1++) {
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[(24 + i1)], 1 + b.am, 1 + this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[(24 + i1)], 1 + imageB.am, 1 + this.ag + this.ah * i1, 17);
     }
     a(this.ag + this.ah * this.M, paramGraphics);
     for (i1 = 0; i1 < 3; i1++)
@@ -2019,208 +2026,208 @@ public final class a
       } else {
         paramGraphics.setColor(128, 128, 128);
       }
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[(24 + i1)], b.am, this.ag + this.ah * i1, 17);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[(24 + i1)], imageB.am, this.ag + this.ah * i1, 17);
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void i(Graphics paramGraphics)
   {
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], 1 + b.am, this.ag + this.ah * 0, 17);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[7] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.O)], 1 + b.am, this.ag + this.ah * 1, 17);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[8], 1 + b.am, this.ag + this.ah * 2, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], 1 + imageB.am, this.ag + this.ah * 0, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[7] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.O)], 1 + imageB.am, this.ag + this.ah * 1, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[8], 1 + imageB.am, this.ag + this.ah * 2, 17);
     a(this.ag + this.ah * this.L, paramGraphics);
     if (0 == this.L) {
       paramGraphics.setColor(255, 255, 255);
     } else {
       paramGraphics.setColor(128, 128, 128);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], b.am, this.ag + this.ah * 0, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[6] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.N)], imageB.am, this.ag + this.ah * 0, 17);
     if (1 == this.L) {
       paramGraphics.setColor(255, 255, 255);
     } else {
       paramGraphics.setColor(128, 128, 128);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[7] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.O)], b.am, this.ag + this.ah * 1, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[7] + " " + this.jdField_a_of_type_ArrayOfJavaLangString[(10 - this.O)], imageB.am, this.ag + this.ah * 1, 17);
     if (2 == this.L) {
       paramGraphics.setColor(255, 255, 255);
     } else {
       paramGraphics.setColor(128, 128, 128);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[8], b.am, this.ag + this.ah * 2, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[8], imageB.am, this.ag + this.ah * 2, 17);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, b.al - 1, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 3, imageB.al - 1, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, b.al - 2, 36);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[4], 2, imageB.al - 2, 36);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void j(Graphics paramGraphics)
   {
-    int i1 = (b.ak - 16 * this.jdField_d_of_type_Byte) / 2;
+    int i1 = (imageB.ak - 16 * this.jdField_d_of_type_Byte) / 2;
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[43], b.am, this.ag, b.ak, b.al - this.ah - this.ag, 0, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[43], imageB.am, this.ag, imageB.ak, imageB.al - this.ah - this.ag, 0, false, 17);
     if (this.jdField_i_of_type_Int > 0)
     {
-      paramGraphics.setClip(0, this.ag + this.ah * 2 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, this.ag + this.ah * 2 + 2 * (this.at % 2), 17);
-      paramGraphics.setClip(0, this.aj + this.ag + this.ah * 4 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, this.aj + this.ag + this.ah * 4 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
-      paramGraphics.setClip(0, 0, b.ak, b.al);
+      paramGraphics.setClip(0, this.ag + this.ah * 2 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, this.ag + this.ah * 2 + 2 * (this.at % 2), 17);
+      paramGraphics.setClip(0, this.aj + this.ag + this.ah * 4 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, this.aj + this.ag + this.ah * 4 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
+      paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
       for (int i3 = 0; i3 < 16; i3++)
       {
         int i2 = this.jdField_a_of_type_Array2dOfByte[this.jdField_h_of_type_Int][i3];
         paramGraphics.setColor(0, 0, 0);
-        paramGraphics.drawString(this.jdField_b_of_type_JavaLangString.substring(i2, i2 + 1), 1 + i1 + i3 * this.jdField_d_of_type_Byte, 1 + this.ag + this.ah * 3, 20);
+        paramGraphics.drawString(this.alphabet.substring(i2, i2 + 1), 1 + i1 + i3 * this.jdField_d_of_type_Byte, 1 + this.ag + this.ah * 3, 20);
         paramGraphics.setColor(255, 255, 255);
-        paramGraphics.drawString(this.jdField_b_of_type_JavaLangString.substring(i2, i2 + 1), i1 + i3 * this.jdField_d_of_type_Byte, this.ag + this.ah * 3, 20);
+        paramGraphics.drawString(this.alphabet.substring(i2, i2 + 1), i1 + i3 * this.jdField_d_of_type_Byte, this.ag + this.ah * 3, 20);
       }
     }
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[18], b.am + 1, 1 + this.ag + this.ah * 3, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[18], imageB.am + 1, 1 + this.ag + this.ah * 3, 17);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[18], b.am, this.ag + this.ah * 3, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[18], imageB.am, this.ag + this.ah * 3, 17);
     paramGraphics.setColor(0, 0, 0);
     if (this.jdField_i_of_type_Int > 0) {
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 3, b.al - 1, 36);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 3, imageB.al - 1, 36);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
     if (this.jdField_i_of_type_Int > 0) {
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 2, b.al - 2, 36);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 2, imageB.al - 2, 36);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void k(Graphics paramGraphics)
   {
     int i1 = this.aq * this.ai;
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[41] + this.jdField_a_of_type_ArrayOfJavaLangString[42], b.am, this.jdField_c_of_type_Byte, b.ak - 10, i1, this.X, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[41] + this.jdField_a_of_type_ArrayOfJavaLangString[42], imageB.am, this.jdField_c_of_type_Byte, imageB.ak - 10, i1, this.X, false, 17);
     if (this.X > 0)
     {
-      paramGraphics.setClip(0, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), 17);
+      paramGraphics.setClip(0, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), 17);
     }
     if (this.X < this.U - (this.ai - 1))
     {
-      paramGraphics.setClip(0, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
+      paramGraphics.setClip(0, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void l(Graphics paramGraphics)
   {
-    int i2 = (b.ak - 16 * (this.jdField_d_of_type_Byte + 1)) / 2;
+    int i2 = (imageB.ak - 16 * (this.jdField_d_of_type_Byte + 1)) / 2;
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[24], 1 + b.am, 1 + this.ag, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[24], 1 + imageB.am, 1 + this.ag, 17);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[24], b.am, this.ag, 17);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[24], imageB.am, this.ag, 17);
     paramGraphics.setColor(0, 0, 0);
     int i3;
     for (int i1 = 0; i1 < 16; i1++)
     {
       i3 = this.jdField_a_of_type_ArrayOfByte[i1];
-      paramGraphics.drawString(this.jdField_b_of_type_JavaLangString.substring(i3, i3 + 1), 1 + i2 + i1 * (this.jdField_d_of_type_Byte + 1), 1 + this.ag + this.ah * 2, 20);
+      paramGraphics.drawString(this.alphabet.substring(i3, i3 + 1), 1 + i2 + i1 * (this.jdField_d_of_type_Byte + 1), 1 + this.ag + this.ah * 2, 20);
     }
     paramGraphics.setColor(255, 255, 255);
     for (i1 = 0; i1 < 16; i1++)
     {
       i3 = this.jdField_a_of_type_ArrayOfByte[i1];
-      paramGraphics.drawString(this.jdField_b_of_type_JavaLangString.substring(i3, i3 + 1), i2 + i1 * (this.jdField_d_of_type_Byte + 1), this.ag + this.ah * 2, 20);
+      paramGraphics.drawString(this.alphabet.substring(i3, i3 + 1), i2 + i1 * (this.jdField_d_of_type_Byte + 1), this.ag + this.ah * 2, 20);
     }
-    paramGraphics.setClip(0, this.ag + this.ah + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+    paramGraphics.setClip(0, this.ag + this.ah + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
     paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, -1 + i2 + this.Y * (this.jdField_d_of_type_Byte + 1), this.ag + this.ah * 1 + 2 * (this.at % 2), 20);
-    paramGraphics.setClip(0, this.ag + this.ah * 3 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+    paramGraphics.setClip(0, this.ag + this.ah * 3 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
     paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, -1 + i2 + this.Y * (this.jdField_d_of_type_Byte + 1), this.ag + this.ah * 3 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 20);
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
     if (this.jdField_f_of_type_Int != 0) {
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 3, b.al - 1, 36);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 3, imageB.al - 1, 36);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
     if (this.jdField_f_of_type_Int != 0) {
-      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 2, b.al - 2, 36);
+      paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[23], 2, imageB.al - 2, 36);
     }
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void m(Graphics paramGraphics)
   {
     int i1 = this.aq * this.ai;
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[34] + this.jdField_a_of_type_JavaLangString + this.jdField_a_of_type_ArrayOfJavaLangString[46], b.am, this.jdField_c_of_type_Byte, b.ak - 10, i1, this.V, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[34] + this.version + this.jdField_a_of_type_ArrayOfJavaLangString[46], imageB.am, this.jdField_c_of_type_Byte, imageB.ak - 10, i1, this.V, false, 17);
     if (this.V > 0)
     {
-      paramGraphics.setClip(0, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), 17);
+      paramGraphics.setClip(0, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), 17);
     }
     if (this.V < this.S - (this.ai - 1))
     {
-      paramGraphics.setClip(0, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
+      paramGraphics.setClip(0, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void n(Graphics paramGraphics)
   {
     int i1 = this.aq * this.ai;
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[35], b.am, this.jdField_c_of_type_Byte, b.ak - 10, i1, this.W, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[35], imageB.am, this.jdField_c_of_type_Byte, imageB.ak - 10, i1, this.W, false, 17);
     if (this.W > 0)
     {
-      paramGraphics.setClip(0, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), 17);
+      paramGraphics.setClip(0, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, 3 + this.jdField_c_of_type_Byte - this.ah + 2 * (this.at % 2), 17);
     }
     if (this.W < this.T - (this.ai - 1))
     {
-      paramGraphics.setClip(0, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2), b.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
-      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, b.am, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
+      paramGraphics.setClip(0, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2), imageB.ak, this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2);
+      paramGraphics.drawImage(this.jdField_a_of_type_JavaxMicroeditionLcduiImage, imageB.am, this.aj + this.jdField_c_of_type_Byte + i1 + 2 * (this.at % 2) - this.jdField_a_of_type_JavaxMicroeditionLcduiImage.getHeight() / 2, 17);
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[21], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void o(Graphics paramGraphics)
   {
     paramGraphics.setColor(255, 255, 255);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[27], b.am, this.ag, b.ak, b.al, 0, false, 17);
-    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[28], b.am, this.ag + 2 * this.ah, b.ak, b.al, 0, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[27], imageB.am, this.ag, imageB.ak, imageB.al, 0, false, 17);
+    a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[28], imageB.am, this.ag + 2 * this.ah, imageB.ak, imageB.al, 0, false, 17);
     paramGraphics.setColor(0, 0, 0);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 1, b.al - 1, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 1, imageB.al - 1, 40);
     paramGraphics.setColor(255, 255, 255);
-    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], b.ak - 2, b.al - 2, 40);
+    paramGraphics.drawString(this.jdField_a_of_type_ArrayOfJavaLangString[29], imageB.ak - 2, imageB.al - 2, 40);
   }
   
   private void p(Graphics paramGraphics)
   {
     paramGraphics.setColor(174, 37, 16);
-    paramGraphics.fillRect(0, 0, b.ak, b.al);
-    paramGraphics.drawImage(this.jdField_c_of_type_JavaxMicroeditionLcduiImage, b.am, b.an, 3);
-    paramGraphics.setClip(0, 0, b.ak, b.al);
-    paramGraphics.drawImage(this.jdField_b_of_type_JavaxMicroeditionLcduiImage, b.am, (b.al - 118) / 10, 17);
+    paramGraphics.fillRect(0, 0, imageB.ak, imageB.al);
+    paramGraphics.drawImage(this.jdField_c_of_type_JavaxMicroeditionLcduiImage, imageB.am, imageB.an, 3);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
+    paramGraphics.drawImage(this.jdField_b_of_type_JavaxMicroeditionLcduiImage, imageB.am, (imageB.al - 118) / 10, 17);
     switch (this.as)
     {
     case 0: 
@@ -2265,27 +2272,27 @@ public final class a
     if (this.H > 0)
     {
       paramGraphics.setColor(216, 216, 216);
-      paramGraphics.fillArc(b.am - this.H * 16, b.an - this.H * 16, 2 * this.H * 16, 2 * this.H * 16, 0, 360);
+      paramGraphics.fillArc(imageB.am - this.H * 16, imageB.an - this.H * 16, 2 * this.H * 16, 2 * this.H * 16, 0, 360);
     }
     if (this.I > 0)
     {
       paramGraphics.setColor(216, 216, 216);
-      paramGraphics.fillArc(b.am - this.I * 16, b.an - this.I * 16, 2 * this.I * 16, 2 * this.I * 16, 0, 360);
+      paramGraphics.fillArc(imageB.am - this.I * 16, imageB.an - this.I * 16, 2 * this.I * 16, 2 * this.I * 16, 0, 360);
     }
   }
   
   private void q(Graphics paramGraphics)
   {
-    for (int i1 = -1; i1 < 2 + b.ak / this.Z; i1++) {
+    for (int i1 = -1; i1 < 2 + imageB.ak / this.Z; i1++) {
       paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[3], this.ab + i1 * this.Z, this.ac, 20);
     }
     paramGraphics.setColor(this.jdField_a_of_type_Array2dOfInt[this.G][0], this.jdField_a_of_type_Array2dOfInt[this.G][1], this.jdField_a_of_type_Array2dOfInt[this.G][2]);
     if (this.ac > 0) {
-      paramGraphics.fillRect(0, 0, b.ak, this.ac);
+      paramGraphics.fillRect(0, 0, imageB.ak, this.ac);
     }
     paramGraphics.setColor(this.jdField_a_of_type_Array2dOfInt[(this.G + 1)][0], this.jdField_a_of_type_Array2dOfInt[(this.G + 1)][1], this.jdField_a_of_type_Array2dOfInt[(this.G + 1)][2]);
-    if (this.ac + this.aa < b.al) {
-      paramGraphics.fillRect(0, this.ac + this.aa, b.ak, b.al - this.ac - this.aa);
+    if (this.ac + this.aa < imageB.al) {
+      paramGraphics.fillRect(0, this.ac + this.aa, imageB.ak, imageB.al - this.ac - this.aa);
     }
     paramGraphics.setColor(0, 0, 0);
     int i2;
@@ -2293,11 +2300,11 @@ public final class a
     int i4;
     int i5;
     int i6;
-    for (i1 = -1 - b.am / this.af; i1 < 2 + b.am / this.af; i1++) {
-      for (i2 = -2 - b.an / this.af; i2 < 2 + b.an / this.af; i2++)
+    for (i1 = -1 - imageB.am / this.af; i1 < 2 + imageB.am / this.af; i1++) {
+      for (i2 = -2 - imageB.an / this.af; i2 < 2 + imageB.an / this.af; i2++)
       {
-        i3 = b.am - this.C + i1 * this.af;
-        i4 = b.an - this.D + i2 * this.af;
+        i3 = imageB.am - this.C + i1 * this.af;
+        i4 = imageB.an - this.D + i2 * this.af;
         if ((this.E + i1 > -1) && (this.E + i1 < this.k) && (this.F + i2 > -1) && (this.F + i2 < this.jdField_c_of_type_ArrayOfByte.length / this.k)) {
           i5 = this.k * (this.F + i2) + (this.E + i1);
         } else {
@@ -2312,12 +2319,12 @@ public final class a
         paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[2], i3 - i6 % 8 * this.af, i4 - i6 / 8 * this.af, 20);
       }
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
-    for (i1 = -1 - b.am / this.af; i1 < 2 + b.am / this.af; i1++) {
-      for (i2 = -2 - b.an / this.af; i2 < 2 + b.an / this.af; i2++)
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
+    for (i1 = -1 - imageB.am / this.af; i1 < 2 + imageB.am / this.af; i1++) {
+      for (i2 = -2 - imageB.an / this.af; i2 < 2 + imageB.an / this.af; i2++)
       {
-        i3 = b.am - this.C + i1 * this.af;
-        i4 = b.an - this.D + i2 * this.af;
+        i3 = imageB.am - this.C + i1 * this.af;
+        i4 = imageB.an - this.D + i2 * this.af;
         if ((this.E + i1 > -1) && (this.E + i1 < this.k) && (this.F + i2 > -1) && (this.F + i2 < this.jdField_c_of_type_ArrayOfByte.length / this.k)) {
           i5 = this.k * (this.F + i2) + (this.E + i1);
         } else {
@@ -2330,29 +2337,29 @@ public final class a
         }
         if ((this.x == 1) && (i6 > 23) && (i6 < 36) && (Math.abs(i1) + Math.abs(i2) < this.w))
         {
-          a(b.am, b.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 1);
-          a(b.am, b.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 1);
-          a(b.am, b.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 3);
+          a(imageB.am, imageB.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 1);
+          a(imageB.am, imageB.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 1);
+          a(imageB.am, imageB.an, i3 + this.af / 2, i4 + this.af / 2, paramGraphics, 3);
         }
       }
     }
     if (this.x == 1)
     {
       paramGraphics.setColor(128, 128, 255);
-      paramGraphics.drawArc(-1 + b.am - this.ae / 2, -1 + b.an - this.ae / 2, 1 + this.ae, 1 + this.ae, 0, 360);
+      paramGraphics.drawArc(-1 + imageB.am - this.ae / 2, -1 + imageB.an - this.ae / 2, 1 + this.ae, 1 + this.ae, 0, 360);
       paramGraphics.setColor(64, 64, 255);
-      paramGraphics.drawArc(-2 + b.am - this.ae / 2, -2 + b.an - this.ae / 2, 3 + this.ae, 3 + this.ae, 0, 360);
+      paramGraphics.drawArc(-2 + imageB.am - this.ae / 2, -2 + imageB.an - this.ae / 2, 3 + this.ae, 3 + this.ae, 0, 360);
       paramGraphics.setColor(32, 32, 192);
-      paramGraphics.drawArc(-3 + b.am - this.ae / 2, -3 + b.an - this.ae / 2, 5 + this.ae, 5 + this.ae, 0, 360);
+      paramGraphics.drawArc(-3 + imageB.am - this.ae / 2, -3 + imageB.an - this.ae / 2, 5 + this.ae, 5 + this.ae, 0, 360);
     }
-    paramGraphics.setClip(b.am - this.ae / 2, b.an - this.ae / 2, this.ae, this.ae);
+    paramGraphics.setClip(imageB.am - this.ae / 2, imageB.an - this.ae / 2, this.ae, this.ae);
     if (this.p / 4 < 8) {
-      paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1], b.am - this.ae / 2 - this.p / 4 * this.ae, b.an - this.ae / 2, 20);
+      paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[1], imageB.am - this.ae / 2 - this.p / 4 * this.ae, imageB.an - this.ae / 2, 20);
     } else {
-      paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[5], b.am - this.ae / 2 - (this.p / 4 - 8) * this.ae, b.an - this.ae / 2, 20);
+      paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[5], imageB.am - this.ae / 2 - (this.p / 4 - 8) * this.ae, imageB.an - this.ae / 2, 20);
     }
-    paramGraphics.setClip(0, 0, b.ak, b.al);
-    paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[4], b.ak - 2, b.al - 3, 40);
+    paramGraphics.setClip(0, 0, imageB.ak, imageB.al);
+    paramGraphics.drawImage(this.jdField_b_of_type_ArrayOfJavaxMicroeditionLcduiImage[4], imageB.ak - 2, imageB.al - 3, 40);
     if ((this.J > 0) || (this.I > 0))
     {
       if (this.at % 2 == 0) {
@@ -2363,24 +2370,24 @@ public final class a
       if (this.J < 100)
       {
         if (this.jdField_g_of_type_Int == 0) {
-          a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[13] + " " + (this.jdField_c_of_type_Int + 1), b.am + 1, b.al / 4, b.ak - 10, b.al / 2, 0, false, 17);
+          a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[13] + " " + (this.jdField_c_of_type_Int + 1), imageB.am + 1, imageB.al / 4, imageB.ak - 10, imageB.al / 2, 0, false, 17);
         } else {
-          a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[44], b.am + 1, b.al / 4, b.ak - 10, b.al / 2, 0, false, 17);
+          a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[44], imageB.am + 1, imageB.al / 4, imageB.ak - 10, imageB.al / 2, 0, false, 17);
         }
       }
       else {
-        a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[(36 + this.jdField_c_of_type_Int)], b.am + 1, b.al / 8, b.ak - 10, b.al, 0, false, 17);
+        a(paramGraphics, this.jdField_a_of_type_ArrayOfJavaLangString[(36 + this.jdField_c_of_type_Int)], imageB.am + 1, imageB.al / 8, imageB.ak - 10, imageB.al, 0, false, 17);
       }
     }
     if (this.H > 0)
     {
       paramGraphics.setColor(216, 216, 216);
-      paramGraphics.fillArc(b.am - this.H * 16, b.an - this.H * 16, 2 * this.H * 16, 2 * this.H * 16, 0, 360);
+      paramGraphics.fillArc(imageB.am - this.H * 16, imageB.an - this.H * 16, 2 * this.H * 16, 2 * this.H * 16, 0, 360);
     }
     if (this.I > 0)
     {
       paramGraphics.setColor(216, 216, 216);
-      paramGraphics.fillArc(b.am - this.I * 16, b.an - this.I * 16, 2 * this.I * 16, 2 * this.I * 16, 0, 360);
+      paramGraphics.fillArc(imageB.am - this.I * 16, imageB.an - this.I * 16, 2 * this.I * 16, 2 * this.I * 16, 0, 360);
     }
   }
 }

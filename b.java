@@ -15,7 +15,7 @@ import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 
-public abstract class loadGameResources
+public abstract class resourcesAndControls
   extends FullCanvas
   implements Runnable
 {
@@ -49,7 +49,7 @@ public abstract class loadGameResources
   public int[] k;
   public RecordStore a;
   
-  public loadGameResources()
+  public resourcesAndControls()
   {
     Font.getFont(64, 1, 0);
     this.jdField_a_of_type_JavaxMicroeditionLcduiFont = Font.getFont(64, 1, 8);

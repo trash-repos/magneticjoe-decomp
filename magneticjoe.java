@@ -4,8 +4,8 @@ import javax.microedition.midlet.MIDlet;
 public class magneticjoe
   extends MIDlet
 {
-  public Display a;
-  public static magneticjoe a;
+  public Display display;
+  public static magneticjoe app;
   
   public static void main(String[] paramArrayOfString) {}
   
@@ -13,8 +13,10 @@ public class magneticjoe
   {
     jdField_a_of_type_Magneticjoe = this;
     this.jdField_a_of_type_JavaxMicroeditionLcduiDisplay = Display.getDisplay(this);
-    a locala = new a();
+
+    Game locala = new Game();
     Thread localThread = new Thread(locala);
+
     this.jdField_a_of_type_JavaxMicroeditionLcduiDisplay.setCurrent(locala);
     localThread.start();
   }
