@@ -53,7 +53,7 @@ public abstract class resourcesAndControls
 
   public enum State
   {
-    SomeState1 (-3),
+    MaybeEndOrLoad (-3),
     Paused (-2),
     Running (-1)
   }
